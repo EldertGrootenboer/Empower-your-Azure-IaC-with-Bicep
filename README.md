@@ -1,1 +1,1 @@
-# Empower-your-Azure-IaC-with-Bicep
+# Empower your Azure IaC with Bicep!
