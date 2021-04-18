@@ -1,6 +1,6 @@
 // Initial storage account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'mystorage1516514451'
+  name: 'stephbicep001'
   location: 'westeurope'
   kind: 'StorageV2'
   sku: {
