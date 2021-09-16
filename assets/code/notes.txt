@@ -18,6 +18,7 @@ Show visualizer
 Use modules
 Deployment - az deployment group create -g rg-empower-your-azure-iac-with-bicep --template-file .\demo.bicep
 Decompile ARM to Bicep
+az bicep decompile --file main.json
 
 
 
