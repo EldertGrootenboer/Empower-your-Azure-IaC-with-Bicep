@@ -19,3 +19,14 @@ module sample 'sample.bicep' = {
     ]
   }
 }
+
+resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' existing = {
+  name: 'myKeyVault'
+}
+
+module sql './sql.bicep' = {
+  name: 'deploySQL'
+  params: {
+    sqlAdminPassword: keyVault.getSecret('sqlAdminPassword')
+  }
+}
