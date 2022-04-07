@@ -3,17 +3,16 @@ Compile Bicep to ARM and compare output ARM to Bicep
 Installation & tooling  -- https://github.com/Azure/bicep/blob/main/docs/installing.md#install-the-bicep-cli-details
 Empty template -- az bicep build --files .\assets\code\sample.bicep
 Build using right-click
-Storage account -- resource storageAccount
+SB namespace -- resource
 Show intellisense
-Use parameters and variables (including objects)
+Use parameters and variables
 String interpolation in variables
 Conditionals (… == … ? … : …)
 Mention parameter files, can be re-used from ARM templates
 Allowed values / decorators
 Use outputs with properties
 Array of param, use together with loop
-Add app service plan
-DependsOn by adding Web App which references App Service Plan
+Existing keyword with KeyVault
 Show visualizer
 Use modules
 Deployment - az deployment group create -g rg-empower-your-azure-iac-with-bicep --template-file .\demo.bicep
@@ -24,7 +23,6 @@ az bicep decompile --file main.json
 
 
 Next steps
-Existing keyword
 Use outputs with existing property (output propertyname as string)
 YAML pipeline integration
 Integration with ARM-TTK
