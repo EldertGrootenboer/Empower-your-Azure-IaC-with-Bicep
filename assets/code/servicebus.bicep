@@ -1,8 +1,8 @@
 @allowed([
   'westeurope'
-  'westus'
+  'westus2'
 ])
-param location string = 'westeurope'
+param location string = 'westus2'
 
 @allowed([
   'test'
@@ -14,11 +14,11 @@ param environment string = 'test'
 @maxValue(100)
 param maxMessageSizeInMegabytes int
 
-var namespaceName = 'sb-elder-demo-${uniqueString(resourceGroup().id)}'
-var maxMessageSizeInKilobytes = maxMessageSizeInMegabytes * 1028
+var namespaceName = 'sb-eldert-sb-bicep-${uniqueString(resourceGroup().id)}'
+var maxMessageSizeInKilobytes = maxMessageSizeInMegabytes * 1024
 
 var queues = [
-  'OrderQueue'
+  'FulfillmentQueue'
   'InvoiceQueue'
 ]
 
@@ -34,14 +34,15 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   properties: {
     disableLocalAuth: environment == 'test' ? false : true
     zoneRedundant: true
-    encryption: {
+    /*encryption: {
       keySource: 'Microsoft.KeyVault'
       keyVaultProperties: [
         {
           keyVaultUri: keyVault.properties.vaultUri
+          keyName: 'sb-encryption-key'
         }
       ]
-    }
+    }*/
   }
 }
 output serviceBusEndpoint string = serviceBus.properties.serviceBusEndpoint
@@ -87,6 +88,9 @@ resource euSubscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@20
       sqlFilter: {
         sqlExpression: 'Region = \'EU\''
       }
+      action: {
+        sqlExpression: 'SET Tariff = 1024'
+      }
     }
   }
 }
@@ -107,6 +111,6 @@ resource naSubscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@20
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: 'MyKeyVault'
-}
+/*resource keyVault 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
+  name: 'kv-eldert-sb-bicep'
+}*/
