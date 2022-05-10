@@ -28,18 +28,20 @@ az account set -s my-subscription-id
 ## Steps
 
 1. Installation & tooling
-2. Empty template
-3. Bicep context menu
-4. Create namespace
-5. Parameters
-6. Variables
-7. String interpolation
-8. Conditionals
-9. Decorators
-10. Use outputs
-11. Looping
-12. Existing resources
-13. Modules
-14. Visualizer
-15. Deployment
-16. Decompiling
+1. Empty template
+1. Bicep context menu
+1. Create namespace
+1. Parameters (location & maxMessageSizeInMegabytes)
+1. Variables ( maxMessageSizeInKilobytes)
+1. String interpolation (namespaceName)
+1. Conditionals (environment)
+1. Decorators (all parameters)
+1. Child resource (queue)
+1. DependsOn (topic and subscription)
+1. Use outputs (serviceBusEndpoint)
+1. Looping (queues)
+1. Existing resources (Key Vault)
+1. Modules
+1. Visualizer
+1. Deployment
+1. Decompiling

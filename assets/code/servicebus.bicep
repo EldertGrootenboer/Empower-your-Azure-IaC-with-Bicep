@@ -14,13 +14,13 @@ param environment string = 'test'
 @maxValue(100)
 param maxMessageSizeInMegabytes int
 
-var namespaceName = 'sb-eldert-sb-bicep-${uniqueString(resourceGroup().id)}'
-var maxMessageSizeInKilobytes = maxMessageSizeInMegabytes * 1024
-
-var queues = [
+param queues array = [
   'FulfillmentQueue'
   'InvoiceQueue'
 ]
+
+var namespaceName = 'sb-eldert-sb-bicep-${uniqueString(resourceGroup().id)}'
+var maxMessageSizeInKilobytes = maxMessageSizeInMegabytes * 1024
 
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
   name: namespaceName
@@ -29,7 +29,7 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
     type: 'SystemAssigned'
   }
   sku: {
-    name:  'Premium'
+    name: 'Premium'
   }
   properties: {
     disableLocalAuth: environment == 'test' ? false : true
@@ -44,18 +44,16 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2021-11-01' = {
       ]
     }*/
   }
+  resource orderQueue 'queues@2021-11-01' = {
+    name: 'OrderQueue'
+    properties: {
+      maxMessageSizeInKilobytes: maxMessageSizeInKilobytes
+      requiresDuplicateDetection: true
+      requiresSession: true
+    }
+  }
 }
 output serviceBusEndpoint string = serviceBus.properties.serviceBusEndpoint
-
-resource orderQueue 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
-  name: 'OrderQueue'
-  properties: {
-    maxMessageSizeInKilobytes: maxMessageSizeInKilobytes
-    requiresDuplicateDetection: true
-    requiresSession: true
-  }
-  parent: serviceBus
-}
 
 resource queuesLoop 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = [for queue in queues: {
   name: queue
